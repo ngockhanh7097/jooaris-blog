@@ -1,4 +1,4 @@
-const feedUrl = "https://api.rss2json.com/v1/api.json?rss_url=https://jooarisblog.blogspot.com/feeds/posts/default";
+const feedUrl = "https://api.rss2json.com/v1/api.json?rss_url=https://blog.jooaris.com/feeds/posts/default";
 
 async function loadBlogPosts() {
   const container = document.getElementById("blog-posts");
@@ -42,3 +42,4 @@ async function loadBlogPosts() {
 }
 
 document.addEventListener("DOMContentLoaded", loadBlogPosts);
+
