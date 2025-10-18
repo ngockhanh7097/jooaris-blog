@@ -1,49 +1,45 @@
-// blogfeed.js — lấy bài từ Blogger JSON feed
-(function(){
-const feedUrl = 'https://blog.jooaris.com/feeds/posts/default?alt=json&max-results=20';
-const container = document.getElementById('blog-grid');
-const errEl = document.getElementById('blog-error');
-const maxShow = 9;
+// Blog Feed Loader for JOOARIS Blog
+// ---------------------------------
 
+const blogURL = "https://blog.jooaris.com/feeds/posts/default?alt=json";
 
-function extractThumbnail(content){
-if(!content) return null;
-const m = content.match(/<img[^>]+src=\"([^\">]+)\"/i);
-return m ? m[1] : null;
+// Dùng API trung gian để tránh lỗi CORS
+const proxyURL = `https://api.allorigins.win/get?url=${encodeURIComponent(blogURL)}`;
+
+fetch(proxyURL)
+  .then(response => response.json())
+  .then(data => {
+    const feed = JSON.parse(data.contents);
+    const posts = feed.feed.entry || [];
+    displayPosts(posts);
+  })
+  .catch(err => {
+    console.error("Lỗi tải bài viết:", err);
+    document.getElementById("articles").innerHTML = "<p>Không thể tải bài viết.</p>";
+  });
+
+function displayPosts(posts) {
+  const container = document.getElementById("articles");
+  container.innerHTML = "";
+
+  posts.forEach(post => {
+    const title = post.title.$t;
+    const link = post.link.find(l => l.rel === "alternate").href;
+    const content = post.content?.$t || post.summary?.$t || "";
+    const thumbnailMatch = content.match(/<img.*?src="(.*?)"/);
+    const thumbnail = thumbnailMatch ? thumbnailMatch[1] : "assets/thumbnail-default.jpg";
+
+    const postEl = document.createElement("article");
+    postEl.classList.add("post");
+
+    postEl.innerHTML = `
+      <a href="${link}" target="_blank" class="thumb">
+        <img src="${thumbnail}" alt="${title}" loading="lazy">
+      </a>
+      <div class="text">
+        <h3><a href="${link}" target="_blank">${title}</a></h3>
+      </div>
+    `;
+    container.appendChild(postEl);
+  });
 }
-
-
-fetch(feedUrl).then(r=>r.json()).then(data=>{
-const entries = (data.feed && data.feed.entry) || [];
-if(!entries.length) throw new Error('No posts');
-container.innerHTML = '';
-entries.slice(0, maxShow).forEach(e=>{
-const title = e.title.$t;
-const linkObj = e.link.find(l=>l.rel==='alternate') || e.link[0];
-const url = linkObj.href;
-const published = e.published ? new Date(e.published.$t).toLocaleDateString('vi-VN') : '';
-const content = (e.content && e.content.$t) || (e.summary && e.summary.$t) || '';
-const snippet = content.replace(/<[^>]+>/g,'').trim().slice(0,140) + '...';
-const thumb = (e.media$thumbnail && e.media$thumbnail.url) || extractThumbnail(content) || 'assets/thumbnail-default.jpg';
-
-
-const card = document.createElement('article');
-card.className = 'card fade-in';
-card.innerHTML = `
-<a class="card-link" href="${url}" target="_blank" rel="noopener">
-<img class="thumb" src="${thumb}" alt="${title}">
-<div class="meta">
-<h3>${title}</h3>
-<p>${snippet}</p>
-<span class="date">${published}</span>
-<div><span class="read-more">Đọc thêm →</span></div>
-</div>
-</a>
-`;
-container.appendChild(card);
-});
-}).catch(err=>{
-console.error('Fetch blog feed error', err);
-if(errEl) errEl.style.display = 'block';
-});
-})();
