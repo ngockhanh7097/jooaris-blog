@@ -1,4 +1,5 @@
-const feedUrl = "https://blog.jooaris.com/feeds/posts/default?alt=json";
+// JOOARIS BLOG FEED DISPLAY
+const feedUrl = "https://jooarisblog.blogspot.com/feeds/posts/default?alt=json";
 
 async function loadBlogPosts() {
   const container = document.getElementById("blog-articles");
@@ -18,7 +19,9 @@ async function loadBlogPosts() {
       const title = entry.title.$t;
       const link = entry.link.find(l => l.rel === "alternate").href;
       const published = new Date(entry.published.$t).toLocaleDateString("vi-VN");
-      const summary = entry.summary ? entry.summary.$t.replace(/<[^>]*>/g, "").slice(0, 100) + "..." : "";
+      const summary = entry.summary
+        ? entry.summary.$t.replace(/<[^>]*>/g, "").slice(0, 100) + "..."
+        : "";
       const image = entry.media$thumbnail
         ? entry.media$thumbnail.url.replace("s72-c", "s400")
         : "https://via.placeholder.com/400x250?text=Jooaris+Blog";
@@ -26,7 +29,7 @@ async function loadBlogPosts() {
       return `
         <div class="blog-card">
           <a href="${link}" target="_blank">
-            <img src="${image}" alt="${title}" />
+            <img src="${image}" alt="${title}">
           </a>
           <div class="blog-card-content">
             <h3>${title}</h3>
