@@ -1,100 +1,48 @@
-/* JOOARIS Blog — Style (minimal, dark luxury) */
-:root {
-  --bg: #000;
-  --surface: #0f0f0f;
-  --muted: #bfbfbf;
-  --accent: #d4af37;
-  --white: #fff;
-  --radius: 12px;
-  --maxwidth: 1200px;
+/* JOOARIS Blog — Style (minimal, dark) */
+:root{
+--bg:#000;
+--surface:#0f0f0f;
+--muted:#bfbfbf;
+--accent:#d4af37;
+--white:#fff;
+--radius:12px;
+--maxwidth:1200px;
 }
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  background: var(--bg);
-  color: var(--white);
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+margin:0;
+font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+background:var(--bg);
+color:var(--white);
+-webkit-font-smoothing:antialiased;
+-moz-osx-font-smoothing:grayscale;
 }
+.site-inner{max-width:var(--maxwidth);margin:0 auto;padding:0 20px}
+.site-header{position:sticky;top:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03);z-index:80}
+.site-header .site-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 20px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--white)}
+.logo{width:44px;height:44px;object-fit:contain;border-radius:8px;background:#000;padding:4px}
+.brand-title{font-weight:700;font-size:20px;letter-spacing:3px}
+.site-nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:15px}
+.site-nav a:hover{color:var(--white)}
 
-/* Header */
-.site-inner {
-  max-width: var(--maxwidth);
-  margin: 0 auto;
-  padding: 0 20px;
-}
 
-.site-header {
-  position: sticky;
-  top: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(6px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-  z-index: 80;
-}
+.hero{padding:60px 0;text-align:center}
+.hero-inner h1{font-size:44px;margin:0 0 10px}
+.lead{color:var(--muted);margin:0}
 
-.site-header .site-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 20px;
-}
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: var(--white);
-}
+.container{max-width:var(--maxwidth);margin:0 auto;padding:60px 20px}
+.section-title{font-size:32px;letter-spacing:2px;margin-bottom:30px;text-align:center}
 
-.logo {
-  width: 44px;
-  height: 44px;
-  object-fit: contain;
-  border-radius: 8px;
-  background: #000;
-  padding: 4px;
-}
 
-.brand-title {
-  font-weight: 700;
-  font-size: 20px;
-  letter-spacing: 3px;
-  color: var(--accent);
-}
 
-.site-nav a {
-  color: var(--muted);
-  text-decoration: none;
-  margin-left: 18px;
-  font-size: 15px;
-  transition: color 0.3s;
-}
-
-.site-nav a:hover { color: var(--white); }
-
-/* Hero */
-.hero {
-  padding: 60px 0;
-  text-align: center;
-}
-
-.hero-inner h1 {
-  font-size: 44px;
-  margin-bottom: 10px;
-}
-
-.lead {
-  color: var(--muted);
-}
-
-/* Blog Section */
+.error-msg{color:#ffb3b3;text-align:center}
 .blog-section {
   padding: 60px 10%;
   background: #000;
+  color: #fff;
 }
 
 .section-title {
@@ -115,13 +63,13 @@ body {
   background: #111;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 24px rgba(255,255,255,0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .blog-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 30px rgba(255,255,255,0.1);
 }
 
 .blog-card img {
@@ -154,22 +102,13 @@ body {
 }
 
 .read-more {
-  color: var(--accent);
+  color: #fff;
   text-decoration: none;
   font-weight: 500;
   border-bottom: 1px solid transparent;
-  transition: border-color 0.3s, color 0.3s;
+  transition: border-color 0.3s;
 }
 
 .read-more:hover {
-  border-color: var(--accent);
-  color: var(--white);
-}
-
-/* Footer */
-.site-footer {
-  padding: 40px 0;
-  text-align: center;
-  color: var(--muted);
-  font-size: 14px;
+  border-color: #fff;
 }
