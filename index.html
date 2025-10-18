@@ -1,60 +1,54 @@
 <!doctype html>
 <html lang="vi">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>JOOARIS Blog</title>
-<link rel="stylesheet" href="style.css">
-<link rel="icon" href="assets/logo.png">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JOOARIS — Journal</title>
+  <link rel="icon" href="assets/logo.svg">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<header class="site-header">
-<div class="site-inner">
-<a class="brand" href="/">
-<img src="assets/logo.svg" alt="JOOARIS" class="logo">
-<span class="brand-title">JOOARIS</span>
-</a>
-<nav class="site-nav">
-<a href="/">Home</a>
-<a href="/">Collection</a>
-<a href="/">Shop</a>
-<a href="https://blog.jooaris.com" target="_blank">Blogger</a>
-</nav>
-</div>
-</header>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container">
+      <a href="/" class="brand">
+        <img src="assets/logo.svg" alt="JOOARIS" class="logo">
+        <span class="brand-name">JOOARIS</span>
+      </a>
+      <nav class="nav">
+        <a href="https://jooaris.com">Home</a>
+        <a href="https://jooaris.com/collection">Collection</a>
+        <a href="https://jooaris.com/shop">Shop</a>
+        <a href="#" class="active">Journal</a>
+      </nav>
+    </div>
+  </header>
 
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero-title">JOOARIS — Journal</h1>
+      <p class="hero-subtitle">Insights • Minimalism • Luxury • Technology</p>
+    </div>
+  </section>
 
-<main class="main">
-<section class="hero">
-<div class="hero-inner">
-<h1>JOOARIS — Journal</h1>
-<p class="lead">Where minimalism meets luxury. Latest from our editorial.</p>
-</div>
-</section>
+  <!-- BLOG FEED -->
+  <main class="container">
+    <section class="blog-feed">
+      <h2 class="section-title">Latest Articles</h2>
+      <div id="blog-posts" class="posts-grid"></div>
+    </section>
+  </main>
 
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© <span id="year"></span> JOOARIS. All Rights Reserved.</p>
+  </footer>
 
-  <section class="blog-section">
-  <h2 class="section-title">Latest Articles</h2>
-  <div id="blog-posts"></div>
-</section>
-
-
-</main>
-
-
-<footer class="site-footer">
-<div class="site-inner">
-<p>© <span id="year"></span> JOOARIS. All Rights Reserved.</p>
-</div>
-</footer>
-
-
-<script src="blogfeed.js"></script>
+  <script src="blogfeed.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
-
 </html>
-
-
-
-
-
