@@ -1,30 +1,49 @@
-const container = document.getElementById("blog-container");
-const feedURL = "https://blog.jooaris.com/feeds/posts/default?alt=json";
+const feedUrl = "https://blog.jooaris.com/feeds/posts/default?alt=json";
 
-fetch(feedURL)
-  .then(res => res.json())
-  .then(data => {
-    const posts = data.feed.entry || [];
-    container.innerHTML = posts.map(post => {
-      const title = post.title.$t;
-      const link = post.link.find(l => l.rel === "alternate").href;
-      const content = post.content ? post.content.$t : "";
-      const imgMatch = content.match(/<img.*?src="(.*?)"/);
-      const thumbnail = imgMatch ? imgMatch[1] : "https://via.placeholder.com/600x400?text=Jooaris+Blog";
-      const short = content.replace(/<[^>]*>?/gm, "").substring(0, 100) + "...";
+async function loadBlogPosts() {
+  const container = document.getElementById("blog-articles");
+  container.innerHTML = "<p>Loading articles...</p>";
+
+  try {
+    const res = await fetch(feedUrl);
+    const data = await res.json();
+
+    const entries = data.feed.entry || [];
+    if (!entries.length) {
+      container.innerHTML = "<p>No articles found.</p>";
+      return;
+    }
+
+    const postsHtml = entries.slice(0, 6).map(entry => {
+      const title = entry.title.$t;
+      const link = entry.link.find(l => l.rel === "alternate").href;
+      const published = new Date(entry.published.$t).toLocaleDateString("vi-VN");
+      const summary = entry.summary ? entry.summary.$t.replace(/<[^>]*>/g, "").slice(0, 100) + "..." : "";
+      const image = entry.media$thumbnail
+        ? entry.media$thumbnail.url.replace("s72-c", "s400")
+        : "https://via.placeholder.com/400x250?text=Jooaris+Blog";
 
       return `
-        <a href="${link}" target="_blank" class="blog-card">
-          <img src="${thumbnail}" alt="${title}">
+        <div class="blog-card">
+          <a href="${link}" target="_blank">
+            <img src="${image}" alt="${title}" />
+          </a>
           <div class="blog-card-content">
             <h3>${title}</h3>
-            <p>${short}</p>
+            <p class="blog-date">${published}</p>
+            <p class="blog-snippet">${summary}</p>
+            <a href="${link}" class="read-more" target="_blank">Read more →</a>
           </div>
-        </a>
+        </div>
       `;
     }).join("");
-  })
-  .catch(err => {
-    container.innerHTML = "<p>Lỗi tải dữ liệu. Vui lòng thử lại sau.</p>";
-    console.error(err);
-  });
+
+    container.innerHTML = postsHtml;
+
+  } catch (error) {
+    console.error("Error loading posts:", error);
+    container.innerHTML = "<p style='color:red;'>Failed to load articles.</p>";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadBlogPosts);
