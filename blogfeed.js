@@ -1,7 +1,7 @@
 // Blog Feed Loader for JOOARIS Blog
 // ---------------------------------
 
-const blogURL = "https://blog.jooaris.com/feeds/posts/default?alt=json";
+const blogURL = "https://jooarisblog.blogspot.com/feeds/posts/default?alt=json";
 
 // Dùng API trung gian để tránh lỗi CORS
 const proxyURL = `https://api.allorigins.win/get?url=${encodeURIComponent(blogURL)}`;
@@ -43,3 +43,4 @@ function displayPosts(posts) {
     container.appendChild(postEl);
   });
 }
+
