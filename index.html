@@ -1,31 +1,55 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jooaris Blog</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>JOOARIS — Journal</title>
   <link rel="stylesheet" href="style.css">
-  <script defer src="blogfeed.js"></script>
+  <link rel="icon" href="assets/logo.png">
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <img src="assets/logo.png" alt="Jooaris Logo">
-      <h1>JOOARIS BLOG</h1>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="site-inner">
+      <a class="brand" href="/">
+        <img src="assets/logo.svg" alt="JOOARIS" class="logo">
+        <span class="brand-title">JOOARIS</span>
+      </a>
+      <nav class="site-nav">
+        <a href="/">Home</a>
+        <a href="/">Collection</a>
+        <a href="/">Shop</a>
+        <a href="https://blog.jooaris.com" class="active">Journal</a>
+      </nav>
     </div>
-    <nav>
-      <a href="https://jooaris.com">Trang chủ</a>
-      <a href="#">Về chúng tôi</a>
-      <a href="#">Liên hệ</a>
-    </nav>
   </header>
 
-  <main>
-    <section id="blog-container" class="blog-grid"></section>
+  <!-- HERO -->
+  <main class="main">
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>JOOARIS — Journal</h1>
+        <p class="lead">Insights • Minimalism • Luxury • Technology</p>
+      </div>
+    </section>
+
+    <!-- BLOG LIST -->
+    <section class="blog-section">
+      <h2 class="section-title">Latest Articles</h2>
+      <div id="blog-articles" class="blog-grid"></div>
+    </section>
   </main>
 
-  <footer>
-    <p>© 2025 Jooaris. All rights reserved.</p>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="site-inner">
+      <p>© <span id="year"></span> JOOARIS. All Rights Reserved.</p>
+    </div>
   </footer>
+
+  <script src="blogfeed.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
