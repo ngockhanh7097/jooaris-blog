@@ -1,46 +1,43 @@
-// Blog Feed Loader for JOOARIS Blog
-// ---------------------------------
+const blogContainer = document.getElementById("blog-articles");
 
-const blogURL = "https://jooarisblog.blogspot.com/feeds/posts/default?alt=json";
-
-// Dùng API trung gian để tránh lỗi CORS
-const proxyURL = `https://api.allorigins.win/get?url=${encodeURIComponent(blogURL)}`;
-
-fetch(proxyURL)
-  .then(response => response.json())
+fetch("https://blog.jooaris.com/feeds/posts/default?alt=json")
+  .then(res => res.json())
   .then(data => {
-    const feed = JSON.parse(data.contents);
-    const posts = feed.feed.entry || [];
-    displayPosts(posts);
+    const entries = data.feed.entry;
+    if (!entries) {
+      blogContainer.innerHTML = `<p style="color:white;text-align:center;">No articles found yet.</p>`;
+      return;
+    }
+
+    let html = "";
+    entries.forEach(entry => {
+      const title = entry.title.$t;
+      const link = entry.link.find(l => l.rel === "alternate").href;
+      const content = entry.content ? entry.content.$t : "";
+      const date = new Date(entry.published.$t).toLocaleDateString();
+      const media = entry["media$thumbnail"]
+        ? entry["media$thumbnail"].url.replace("s72-c", "s600")
+        : "https://via.placeholder.com/600x400?text=JOOARIS";
+
+      const cleanText = content.replace(/<[^>]+>/g, "");
+      const snippet = cleanText.length > 120 ? cleanText.substring(0, 120) + "..." : cleanText;
+
+      html += `
+        <div class="blog-card">
+          <img src="${media}" alt="${title}">
+          <div class="blog-card-content">
+            <h3>${title}</h3>
+            <p class="blog-date">${date}</p>
+            <p class="blog-snippet">${snippet}</p>
+            <a href="${link}" target="_blank" class="read-more">Read More →</a>
+          </div>
+        </div>
+      `;
+    });
+
+    blogContainer.innerHTML = `<div class="blog-grid">${html}</div>`;
   })
   .catch(err => {
-    console.error("Lỗi tải bài viết:", err);
-    document.getElementById("articles").innerHTML = "<p>Không thể tải bài viết.</p>";
+    console.error("Error fetching blog feed:", err);
+    blogContainer.innerHTML = `<p style="color:white;text-align:center;">Failed to load articles.</p>`;
   });
-
-function displayPosts(posts) {
-  const container = document.getElementById("articles");
-  container.innerHTML = "";
-
-  posts.forEach(post => {
-    const title = post.title.$t;
-    const link = post.link.find(l => l.rel === "alternate").href;
-    const content = post.content?.$t || post.summary?.$t || "";
-    const thumbnailMatch = content.match(/<img.*?src="(.*?)"/);
-    const thumbnail = thumbnailMatch ? thumbnailMatch[1] : "assets/thumbnail-default.jpg";
-
-    const postEl = document.createElement("article");
-    postEl.classList.add("post");
-
-    postEl.innerHTML = `
-      <a href="${link}" target="_blank" class="thumb">
-        <img src="${thumbnail}" alt="${title}" loading="lazy">
-      </a>
-      <div class="text">
-        <h3><a href="${link}" target="_blank">${title}</a></h3>
-      </div>
-    `;
-    container.appendChild(postEl);
-  });
-}
-
