@@ -1,6 +1,5 @@
 const feedUrl = "https://api.rss2json.com/v1/api.json?rss_url=https://blog.jooaris.com/feeds/posts/default";
 
-
 async function loadBlogPosts() {
   const container = document.getElementById("blog-posts");
   container.innerHTML = "<p>Loading articles...</p>";
