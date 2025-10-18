@@ -1,5 +1,6 @@
 // JOOARIS BLOG FEED DISPLAY
-const feedUrl = "https://jooarisblog.blogspot.com/feeds/posts/default?alt=json";
+const feedUrl = "https://api.rss2json.com/v1/api.json?rss_url=https://jooarisblog.blogspot.com/feeds/posts/default";
+
 
 async function loadBlogPosts() {
   const container = document.getElementById("blog-posts");
@@ -48,3 +49,4 @@ async function loadBlogPosts() {
 }
 
 document.addEventListener("DOMContentLoaded", loadBlogPosts);
+
