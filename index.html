@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>JOOARIS Blog</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="assets/logo.png">
+</head>
+<body>
+<header class="site-header">
+<div class="site-inner">
+<a class="brand" href="/">
+<img src="assets/logo.svg" alt="JOOARIS" class="logo">
+<span class="brand-title">JOOARIS</span>
+</a>
+<nav class="site-nav">
+<a href="/">Home</a>
+<a href="/">Collection</a>
+<a href="/">Shop</a>
+<a href="https://blog.jooaris.com" target="_blank">Blogger</a>
+</nav>
+</div>
+</header>
+
+
+<main class="main">
+<section class="hero">
+<div class="hero-inner">
+<h1>JOOARIS — Journal</h1>
+<p class="lead">Where minimalism meets luxury. Latest from our editorial.</p>
+</div>
+</section>
+
+
+<section class="container" id="blog-section">
+<h2 class="section-title">Latest Articles</h2>
+<div id="blog-grid" class="grid"></div>
+<div id="blog-error" class="error-msg" style="display:none">Không thể tải bài viết.</div>
+</section>
+</main>
+
+
+<footer class="site-footer">
+<div class="site-inner">
+<p>© <span id="year"></span> JOOARIS. All Rights Reserved.</p>
+</div>
+</footer>
+
+
+<script src="blogfeed.js"></script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
